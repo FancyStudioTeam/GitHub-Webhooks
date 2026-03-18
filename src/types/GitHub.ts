@@ -12,4 +12,5 @@ export interface GitHubRepository {
 	url: string;
 }
 
+export type RawGitHubIssue = components['schemas']['issue'];
 export type RawGitHubRepository = components['schemas']['repository'];
