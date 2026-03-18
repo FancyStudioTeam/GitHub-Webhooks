@@ -1,14 +1,14 @@
-name: "Discord-Webhooks"
+name: Fancy-Discord-Webhooks
 
 inputs:
     webhook_id:
-        description: "The ID of the Discord webhook"
+        description: The ID of the Discord webhook
         required: true
 
     webhook_token:
-        description: "The token of the Discord webhook"
+        description: The token of the Discord webhook
         required: true
 
 runs:
-    using: "node20"
-    main: "dist/index.js"
+    using: node24
+    main: dist/index.js

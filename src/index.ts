@@ -1,6 +1,3 @@
-/// <reference path="types/GitHub.js" />
-// @ts-check
-
 import { getInput, setFailed, debug } from "@actions/core";
 import { WebhookClient } from "./structures/WebhookClient";
 import { context } from "@actions/github";
@@ -17,8 +14,10 @@ async function execute() {
 	// @ts-ignore
 	const { full_name } = repository;
 
-	debug(JSON.stringify(context));
-	console.log(context);
+	console.dir(context, {
+		depth: null,
+		colors: true,
+	});
 
 	/** @type {GitHubContext} */
 	const gitHubContext = {
