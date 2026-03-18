@@ -1,4 +1,4 @@
-name: "Discord Webhooks"
+name: "Discord-Webhooks"
 
 inputs:
     webhook_id:
