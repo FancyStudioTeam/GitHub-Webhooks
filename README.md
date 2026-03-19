@@ -28,3 +28,12 @@ jobs:
                   webhook_id: ${{ secrets.DISCORD_WEBHOOK_ID }}
                   webhook_token: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
 ```
+
+## ℹ️ API
+
+### ⚙️ GitHub Action Options
+
+| Option          | Description                       | Required |
+| --------------- | --------------------------------- | -------- |
+| `webhook_id`    | The ID of the Discord webhook.    | `✅`     |
+| `webhook_token` | The token of the Discord webhook. | `✅`     |
