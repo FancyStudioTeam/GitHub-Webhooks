@@ -52619,12 +52619,13 @@ function ISSUE_OPENED_MESSAGE({
 	issue,
 	repository,
 }) {
-	const { title: issueTitle } = issue;
+	const { body: issueBody, title: issueTitle } = issue;
 	const { fullName: repositoryFullName, url: repositoryUrl } = repository;
 
 	const repositoryHyperlink = formatRepositoryHyperlink(repositoryFullName, repositoryUrl);
 
 	const containerBuilder = new ContainerBuilder();
+	const containerSeparatorBuilder = new SeparatorBuilder();
 	const containerTitleBuilder = new TextDisplayBuilder();
 
 	containerTitleBuilder.setContent(
@@ -52636,6 +52637,15 @@ function ISSUE_OPENED_MESSAGE({
 
 	containerBuilder.addTextDisplayComponents(containerTitleBuilder);
 	containerBuilder.setAccentColor(GREEN_COLOR);
+
+	if (body) {
+		const containerBodyBuilder = new TextDisplayBuilder();
+
+		containerBodyBuilder.setContent(body);
+
+		containerBuilder.addSeparatorComponents(containerSeparatorBuilder)
+		containerBuilder.addTextDisplayComponents(containerBodyBuilder)
+	}
 
 	return containerBuilder;
 }

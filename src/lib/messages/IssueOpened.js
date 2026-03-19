@@ -1,6 +1,6 @@
 /* biome-ignore-all lint/style/useNamingConvention: (x) */
 
-import { ContainerBuilder, HeadingLevel, heading, TextDisplayBuilder } from '@discordjs/builders';
+import { ContainerBuilder, HeadingLevel, heading, TextDisplayBuilder, SeparatorBuilder } from '@discordjs/builders';
 // import type { GitHubIssue, GitHubRepository } from '../../types/GitHub.js';
 import { formatRepositoryHyperlink } from '../../utils/markdown/formatRepositoryHyperlink.js';
 import { GREEN_COLOR } from '../Colors.js';
@@ -10,12 +10,13 @@ export function ISSUE_OPENED_MESSAGE({
 	issue,
 	repository,
 }) {
-	const { title: issueTitle } = issue;
+	const { body: issueBody, title: issueTitle } = issue;
 	const { fullName: repositoryFullName, url: repositoryUrl } = repository;
 
 	const repositoryHyperlink = formatRepositoryHyperlink(repositoryFullName, repositoryUrl);
 
 	const containerBuilder = new ContainerBuilder();
+	const containerSeparatorBuilder = new SeparatorBuilder();
 	const containerTitleBuilder = new TextDisplayBuilder();
 
 	containerTitleBuilder.setContent(
@@ -27,6 +28,15 @@ export function ISSUE_OPENED_MESSAGE({
 
 	containerBuilder.addTextDisplayComponents(containerTitleBuilder);
 	containerBuilder.setAccentColor(GREEN_COLOR);
+
+	if (body) {
+		const containerBodyBuilder = new TextDisplayBuilder();
+
+		containerBodyBuilder.setContent(body);
+
+		containerBuilder.addSeparatorComponents(containerSeparatorBuilder)
+		containerBuilder.addTextDisplayComponents(containerBodyBuilder)
+	}
 
 	return containerBuilder;
 }
