@@ -1,38 +1,39 @@
 {
+	"name": "github-actions",
+	"version": "0.1.0",
+	"private": true,
+	"description": "A collection of custom GitHub Actions used in FancyStudio",
+	"license": "MIT",
 	"author": "FancyStudio",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/FancyStudioTeam/GitHub-Actions"
+	},
+	"type": "module",
+	"main": "src/index.ts",
+	"scripts": {
+		"oxfmt": "oxfmt .",
+		"oxlint:fix": "oxlint . --fix",
+		"oxlint": "oxlint .",
+		"build": "rollup --config rollup.config.ts"
+	},
 	"dependencies": {
 		"@actions/core": "3.0.0",
 		"@actions/github": "9.0.0",
 		"@discordjs/builders": "1.13.1",
 		"discord-api-types": "0.38.42"
 	},
-	"description": "A collection of custom GitHub Actions used in FancyStudio",
 	"devDependencies": {
-		"@biomejs/biome": "2.4.8",
 		"@octokit/openapi-types": "27.0.0",
 		"@octokit/types": "16.0.0",
 		"@rollup/plugin-commonjs": "29.0.2",
 		"@rollup/plugin-node-resolve": "16.0.3",
 		"@rollup/plugin-typescript": "12.3.0",
 		"@types/node": "25.5.0",
+		"oxfmt": "0.41.0",
+		"oxlint": "1.56.0",
 		"rollup": "4.59.0",
 		"typescript": "5.9.3"
 	},
-	"license": "MIT",
-	"main": "src/index.ts",
-	"name": "github-actions",
-	"packageManager": "pnpm@10.0.0",
-	"private": true,
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/FancyStudioTeam/GitHub-Actions"
-	},
-	"scripts": {
-		"biome:check": "biome check",
-		"biome:ci": "biome ci",
-		"biome:write": "biome check --write",
-		"build": "rollup --config rollup.config.ts"
-	},
-	"type": "module",
-	"version": "0.1.0"
+	"packageManager": "pnpm@10.0.0"
 }

@@ -15,10 +15,7 @@
 		"enabled": true
 	},
 	"files": {
-		"includes": [
-			"**",
-			"!!**/dist"
-		]
+		"includes": ["**", "!!**/dist"]
 	},
 	"formatter": {
 		"attributePosition": "multiline",
@@ -85,19 +82,13 @@
 					"options": {
 						"conventions": [
 							{
-								"formats": [
-									"camelCase",
-									"snake_case"
-								],
+								"formats": ["camelCase", "snake_case"],
 								"selector": {
 									"kind": "typeProperty"
 								}
 							},
 							{
-								"formats": [
-									"camelCase",
-									"snake_case"
-								],
+								"formats": ["camelCase", "snake_case"],
 								"selector": {
 									"kind": "objectLiteralProperty"
 								}
