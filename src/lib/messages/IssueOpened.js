@@ -9,7 +9,7 @@ import { ISSUE_OPENED_EMOJI } from '../Emojis.js';
 export function ISSUE_OPENED_MESSAGE({
 	issue,
 	repository,
-}: IssueOpenedMessageOptions): ContainerBuilder {
+}) {
 	const { title: issueTitle } = issue;
 	const { fullName: repositoryFullName, url: repositoryUrl } = repository;
 
@@ -30,8 +30,8 @@ export function ISSUE_OPENED_MESSAGE({
 
 	return containerBuilder;
 }
-
+/*
 interface IssueOpenedMessageOptions {
 	issue: GitHubIssue;
 	repository: GitHubRepository;
-}
+	}*/

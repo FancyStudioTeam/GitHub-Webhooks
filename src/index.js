@@ -4,6 +4,8 @@ import { context } from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
 import { parseGitHubRepository } from './utils/parser/parseGitHubRepository.js';
 import { parseGitHubIssue } from './utils/parser/parseGitHubIssue.js';
+import { WebhookClient } from './structures/WebhookClient.js';
+import { ISSUE_OPENED_MESSAGE } from './lib/messages/IssueOpened.js';
 
 async function run() {
 	try {
