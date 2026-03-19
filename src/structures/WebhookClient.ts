@@ -26,9 +26,7 @@ export class WebhookClient {
 
 		await fetch(url, {
 			body: JSON.stringify({
-				components: [
-					containerBuilder,
-				],
+				components: [containerBuilder],
 				flags: MessageFlags.IsComponentsV2,
 			}),
 			headers: {

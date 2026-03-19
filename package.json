@@ -12,9 +12,12 @@
 	"type": "module",
 	"main": "src/index.ts",
 	"scripts": {
-		"oxfmt": "oxfmt .",
-		"oxlint:fix": "oxlint . --fix",
-		"oxlint": "oxlint .",
+		"oxc": "pnpm oxlint && pnpm oxfmt",
+		"oxc:fix": "pnpm oxlint:fix && pnpm oxfmt:fix",
+		"oxfmt": "oxfmt --check",
+		"oxfmt:fix": "oxfmt --write",
+		"oxlint": "oxlint",
+		"oxlint:fix": "oxlint --fix",
 		"build": "rollup --config rollup.config.ts"
 	},
 	"dependencies": {

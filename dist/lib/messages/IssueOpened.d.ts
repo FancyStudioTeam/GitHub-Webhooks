@@ -5,4 +5,4 @@ interface IssueOpenedMessageOptions {
     issue: GitHubIssue;
     repository: GitHubRepository;
 }
-export {};
+

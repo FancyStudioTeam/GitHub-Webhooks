@@ -8,8 +8,10 @@ import {
 	SeparatorBuilder,
 	TextDisplayBuilder,
 } from '@discordjs/builders';
+
 import { GREEN_COLOR } from '#/lib/Colors.js';
 import { ISSUE_OPENED_EMOJI } from '#/lib/Emojis.js';
+
 import type { IssueMessageOptions } from './shared.js';
 
 export function ISSUE_OPENED_MESSAGE({ issue, repository }: IssueMessageOptions): ContainerBuilder {

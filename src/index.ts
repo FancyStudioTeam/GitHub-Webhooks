@@ -1,6 +1,7 @@
 import { getInput, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 import type { ContainerBuilder } from '@discordjs/builders';
+
 import { ISSUE_CLOSED_MESSAGE } from './lib/messages/issues/IssueClosed.js';
 import { ISSUE_OPENED_MESSAGE } from './lib/messages/issues/IssueOpened.js';
 import { WebhookClient } from './structures/WebhookClient.js';

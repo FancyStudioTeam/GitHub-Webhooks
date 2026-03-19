@@ -7,8 +7,10 @@ import {
 	hyperlink,
 	TextDisplayBuilder,
 } from '@discordjs/builders';
+
 import { PURPLE_COLOR } from '#/lib/Colors.js';
 import { ISSUE_CLOSED_EMOJI } from '#/lib/Emojis.js';
+
 import type { IssueMessageOptions } from './shared.js';
 
 export function ISSUE_CLOSED_MESSAGE({ issue, repository }: IssueMessageOptions): ContainerBuilder {
