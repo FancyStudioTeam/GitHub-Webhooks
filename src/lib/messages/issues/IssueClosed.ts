@@ -2,11 +2,9 @@
 
 import {
 	ContainerBuilder,
-	escapeInlineCode,
 	HeadingLevel,
 	heading,
 	hyperlink,
-	inlineCode,
 	TextDisplayBuilder,
 } from '@discordjs/builders';
 import { PURPLE_COLOR } from '../../Colors.js';
@@ -17,15 +15,13 @@ export function ISSUE_CLOSED_MESSAGE({ issue, repository }: IssueMessageOptions)
 	const { number: issueNumber, title: issueTitle, url: issueUrl } = issue;
 	const { fullName: repositoryFullName } = repository;
 
-	const formattedRepositoryFullName = inlineCode(escapeInlineCode(repositoryFullName));
-
 	const containerBuilder = new ContainerBuilder();
 	const containerTitleBuilder = new TextDisplayBuilder();
 
 	containerTitleBuilder.setContent(
 		heading(
 			hyperlink(
-				`${ISSUE_CLOSED_EMOJI} [${formattedRepositoryFullName}] (Issue #${issueNumber}) ${issueTitle}`,
+				`${ISSUE_CLOSED_EMOJI} [${repositoryFullName}] (Issue #${issueNumber}) ${issueTitle}`,
 				issueUrl,
 			),
 			HeadingLevel.Three,

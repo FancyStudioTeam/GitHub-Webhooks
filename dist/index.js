@@ -49192,10 +49192,9 @@ const ISSUE_OPENED_EMOJI = '<:_:1483983242527899738>';
 function ISSUE_CLOSED_MESSAGE({ issue, repository }) {
     const { number: issueNumber, title: issueTitle, url: issueUrl } = issue;
     const { fullName: repositoryFullName } = repository;
-    const formattedRepositoryFullName = inlineCode(escapeInlineCode(repositoryFullName));
     const containerBuilder = new ContainerBuilder();
     const containerTitleBuilder = new TextDisplayBuilder();
-    containerTitleBuilder.setContent(heading(hyperlink(`${ISSUE_CLOSED_EMOJI} [${formattedRepositoryFullName}] (Issue #${issueNumber}) ${issueTitle}`, issueUrl), HeadingLevel.Three));
+    containerTitleBuilder.setContent(heading(hyperlink(`${ISSUE_CLOSED_EMOJI} [${repositoryFullName}] (Issue #${issueNumber}) ${issueTitle}`, issueUrl), HeadingLevel.Three));
     containerBuilder.addTextDisplayComponents(containerTitleBuilder);
     containerBuilder.setAccentColor(PURPLE_COLOR);
     return containerBuilder;
@@ -49208,7 +49207,7 @@ function ISSUE_OPENED_MESSAGE({ issue, repository }) {
     const containerBuilder = new ContainerBuilder();
     const containerSeparatorBuilder = new SeparatorBuilder();
     const containerTitleBuilder = new TextDisplayBuilder();
-    containerTitleBuilder.setContent(heading(hyperlink(`${ISSUE_OPENED_EMOJI} [${repositoryFullName} - Issue #${issueNumber}]: ${issueTitle}`, issueUrl), HeadingLevel.Three));
+    containerTitleBuilder.setContent(heading(hyperlink(`${ISSUE_OPENED_EMOJI} [${repositoryFullName}] (Issue #${issueNumber}) ${issueTitle}`, issueUrl), HeadingLevel.Three));
     containerBuilder.addTextDisplayComponents(containerTitleBuilder);
     containerBuilder.setAccentColor(GREEN_COLOR);
     if (issueBody) {
