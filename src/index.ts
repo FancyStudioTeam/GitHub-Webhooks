@@ -1,11 +1,11 @@
 // @ts-check
 
-import { context } from '@actions/github';
 import { getInput, setFailed } from '@actions/core';
-import { parseGitHubRepository } from './utils/parser/parseGitHubRepository.js';
-import { parseGitHubIssue } from './utils/parser/parseGitHubIssue.js';
-import { WebhookClient } from './structures/WebhookClient.js';
+import { context } from '@actions/github';
 import { ISSUE_OPENED_MESSAGE } from './lib/messages/IssueOpened.js';
+import { WebhookClient } from './structures/WebhookClient.js';
+import { parseGitHubIssue } from './utils/parser/parseGitHubIssue.js';
+import { parseGitHubRepository } from './utils/parser/parseGitHubRepository.js';
 
 async function run() {
 	try {

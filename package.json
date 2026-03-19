@@ -1,5 +1,5 @@
 {
-	"author": "",
+	"author": "FancyStudio",
 	"dependencies": {
 		"@actions/core": "3.0.0",
 		"@actions/github": "9.0.0",
@@ -7,7 +7,7 @@
 		"@discordjs/formatters": "0.6.2",
 		"discord-api-types": "0.38.42"
 	},
-	"description": "",
+	"description": "A collection of custom GitHub Actions used in FancyStudio",
 	"devDependencies": {
 		"@biomejs/biome": "2.4.8",
 		"@octokit/openapi-types": "27.0.0",
@@ -15,16 +15,24 @@
 		"@rollup/plugin-commonjs": "29.0.2",
 		"@rollup/plugin-node-resolve": "16.0.3",
 		"@types/node": "25.5.0",
-		"@vercel/ncc": "0.38.4",
 		"rollup": "4.59.0",
 		"typescript": "5.9.3"
 	},
-	"keywords": [],
-	"license": "ISC",
+	"license": "MIT",
 	"main": "src/index.ts",
 	"name": "github-actions",
-	"scripts": {
-		"build": "rollup --config rollup.config.js"
+	"packageManager": "pnpm@10.0.0",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/FancyStudioTeam/GitHub-Actions"
 	},
-	"version": "1.0.0"
+	"scripts": {
+		"biome:check": "biome check",
+		"biome:ci": "biome ci",
+		"biome:write": "biome check --write",
+		"build": "rollup --config rollup.config.ts"
+	},
+	"type": "module",
+	"version": "0.1.0"
 }

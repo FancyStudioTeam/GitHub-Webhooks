@@ -1,15 +1,18 @@
 /* biome-ignore-all lint/style/useNamingConvention: (x) */
 
-import { ContainerBuilder, HeadingLevel, heading, TextDisplayBuilder, SeparatorBuilder } from '@discordjs/builders';
+import {
+	ContainerBuilder,
+	HeadingLevel,
+	heading,
+	SeparatorBuilder,
+	TextDisplayBuilder,
+} from '@discordjs/builders';
 // import type { GitHubIssue, GitHubRepository } from '../../types/GitHub.js';
 import { formatRepositoryHyperlink } from '../../utils/markdown/formatRepositoryHyperlink.js';
 import { GREEN_COLOR } from '../Colors.js';
 import { ISSUE_OPENED_EMOJI } from '../Emojis.js';
 
-export function ISSUE_OPENED_MESSAGE({
-	issue,
-	repository,
-}) {
+export function ISSUE_OPENED_MESSAGE({ issue, repository }) {
 	const { body: issueBody, title: issueTitle } = issue;
 	const { fullName: repositoryFullName, url: repositoryUrl } = repository;
 
@@ -34,8 +37,8 @@ export function ISSUE_OPENED_MESSAGE({
 
 		containerBodyBuilder.setContent(issueBody);
 
-		containerBuilder.addSeparatorComponents(containerSeparatorBuilder)
-		containerBuilder.addTextDisplayComponents(containerBodyBuilder)
+		containerBuilder.addSeparatorComponents(containerSeparatorBuilder);
+		containerBuilder.addTextDisplayComponents(containerBodyBuilder);
 	}
 
 	return containerBuilder;

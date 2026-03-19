@@ -5,14 +5,14 @@ import { MessageFlags } from 'discord-api-types/v10';
 export class WebhookClient {
 	/**
 	 * @param {string} webhookId
-		* @param {string} webhookToken
+	 * @param {string} webhookToken
 	 */
 	constructor(webhookId, webhookToken) {
 		this.webhookId = webhookId;
 		this.webhookToken = webhookToken;
 	}
 
-	 _createRequestUrl() {
+	_createRequestUrl() {
 		const { webhookId, webhookToken } = this;
 
 		const url = new URL(`https://discord.com/api/v10/webhooks/${webhookId}/${webhookToken}`);
@@ -23,7 +23,7 @@ export class WebhookClient {
 		return url;
 	}
 
-	 async execute(message) {
+	async execute(message) {
 		const url = this._createRequestUrl();
 
 		await fetch(url, {
