@@ -49182,17 +49182,8 @@ function embedLength(data) {
 }
 __name(embedLength, "embedLength");
 
-// @ts-check
-
-
-/**
- * @param {string} repositoryFullName
- * @param {string} repositoryUrl
- *
- * @returns {string}
- */
 function formatRepositoryHyperlink(repositoryFullName, repositoryUrl) {
-	return hyperlink(inlineCode(escapeInlineCode(repositoryFullName)), repositoryUrl);
+    return hyperlink(inlineCode(escapeInlineCode(repositoryFullName)), repositoryUrl);
 }
 
 const GREEN_COLOR = 0x1a7f37;
@@ -49200,44 +49191,29 @@ const GREEN_COLOR = 0x1a7f37;
 const ISSUE_OPENED_EMOJI = '<:_:1483983242527899738>';
 
 /* biome-ignore-all lint/style/useNamingConvention: (x) */
-
-
 function ISSUE_OPENED_MESSAGE({ issue, repository }) {
-	const { body: issueBody, title: issueTitle } = issue;
-	const { fullName: repositoryFullName, url: repositoryUrl } = repository;
-
-	const repositoryHyperlink = formatRepositoryHyperlink(repositoryFullName, repositoryUrl);
-
-	const containerBuilder = new ContainerBuilder();
-	const containerSeparatorBuilder = new SeparatorBuilder();
-	const containerTitleBuilder = new TextDisplayBuilder();
-
-	containerTitleBuilder.setContent(
-		heading(
-			`${ISSUE_OPENED_EMOJI} ${repositoryHyperlink} Issue Opened: ${issueTitle}`,
-			HeadingLevel.Three,
-		),
-	);
-
-	containerBuilder.addTextDisplayComponents(containerTitleBuilder);
-	containerBuilder.setAccentColor(GREEN_COLOR);
-
-	if (issueBody) {
-		const containerBodyBuilder = new TextDisplayBuilder();
-
-		containerBodyBuilder.setContent(issueBody);
-
-		containerBuilder.addSeparatorComponents(containerSeparatorBuilder);
-		containerBuilder.addTextDisplayComponents(containerBodyBuilder);
-	}
-
-	return containerBuilder;
+    const { body: issueBody, title: issueTitle } = issue;
+    const { fullName: repositoryFullName, url: repositoryUrl } = repository;
+    const repositoryHyperlink = formatRepositoryHyperlink(repositoryFullName, repositoryUrl);
+    const containerBuilder = new ContainerBuilder();
+    const containerSeparatorBuilder = new SeparatorBuilder();
+    const containerTitleBuilder = new TextDisplayBuilder();
+    containerTitleBuilder.setContent(heading(`${ISSUE_OPENED_EMOJI} ${repositoryHyperlink} Issue Opened: ${issueTitle}`, HeadingLevel.Three));
+    containerBuilder.addTextDisplayComponents(containerTitleBuilder);
+    containerBuilder.setAccentColor(GREEN_COLOR);
+    if (issueBody) {
+        const containerBodyBuilder = new TextDisplayBuilder();
+        containerBodyBuilder.setContent(issueBody);
+        containerBuilder.addSeparatorComponents(containerSeparatorBuilder);
+        containerBuilder.addTextDisplayComponents(containerBodyBuilder);
+    }
+    return containerBuilder;
 }
 /*
 interface IssueOpenedMessageOptions {
-	issue: GitHubIssue;
-	repository: GitHubRepository;
-	}*/
+    issue: GitHubIssue;
+    repository: GitHubRepository;
+    }*/
 
 // @ts-check
 
@@ -49323,54 +49299,42 @@ function parseGitHubRepository(payload) {
 	return gitHubRepository;
 }
 
-// @ts-check
-
-
 async function run() {
-	try {
-		const webhookId = getInput('webhook_id');
-		const webhookToken = getInput('webhook_token');
-
-		const webhook = new WebhookClient(webhookId, webhookToken);
-
-		const { eventName, payload } = context;
-
-		console.dir(context, {
-			colors: true,
-			depth: null,
-		});
-
-		switch (eventName) {
-			case 'issues': {
-				const { action } = payload;
-
-				if (!action) {
-					return setFailed('Cannot handle issue without an action');
-				}
-
-				const issue = parseGitHubIssue(payload);
-				const repository = parseGitHubRepository(payload);
-
-				const messages = {
-					opened: ISSUE_OPENED_MESSAGE({
-						issue,
-						repository,
-					}),
-				};
-
-				const message = messages[action];
-
-				if (message) {
-					await webhook.execute(message);
-				}
-			}
-		}
-	} catch (error) {
-		if (error instanceof Error) {
-			setFailed(error);
-		}
-	}
+    try {
+        const webhookId = getInput('webhook_id');
+        const webhookToken = getInput('webhook_token');
+        const webhook = new WebhookClient(webhookId, webhookToken);
+        const { eventName, payload } = context;
+        console.dir(context, {
+            colors: true,
+            depth: null,
+        });
+        switch (eventName) {
+            case 'issues': {
+                const { action } = payload;
+                if (!action) {
+                    return setFailed('Cannot handle issue without an action');
+                }
+                const issue = parseGitHubIssue(payload);
+                const repository = parseGitHubRepository(payload);
+                const messages = {
+                    opened: ISSUE_OPENED_MESSAGE({
+                        issue,
+                        repository,
+                    }),
+                };
+                const message = messages[action];
+                if (message) {
+                    await webhook.execute(message);
+                }
+            }
+        }
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            setFailed(error);
+        }
+    }
 }
-
 run();
 //# sourceMappingURL=index.js.map
