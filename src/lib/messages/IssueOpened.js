@@ -1,7 +1,7 @@
 /* biome-ignore-all lint/style/useNamingConvention: (x) */
 
 import { ContainerBuilder, HeadingLevel, heading, TextDisplayBuilder } from '@discordjs/builders';
-import type { GitHubIssue, GitHubRepository } from '../../types/GitHub.js';
+// import type { GitHubIssue, GitHubRepository } from '../../types/GitHub.js';
 import { formatRepositoryHyperlink } from '../../utils/markdown/formatRepositoryHyperlink.js';
 import { GREEN_COLOR } from '../Colors.js';
 import { ISSUE_OPENED_EMOJI } from '../Emojis.js';
