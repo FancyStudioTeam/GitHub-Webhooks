@@ -48406,12 +48406,13 @@ const REPO_PUSH = '<:_:1484953588789940426>';const IssueClosedEventHandler = Obj
 }const GITHUB_COMMIT_HASH_LENGTH = 7;
 const PushEventHandler = Object.freeze({
     _createCommitBuilder(commit) {
-        const { message: commitMessage, url: commitUrl } = commit;
+        const { committer: commitCommiter, message: commitMessage, url: commitUrl } = commit;
+        const { name: commitCommiterName } = commitCommiter;
         const commitBuilder = new SectionBuilder();
         const commitDataBuilder = new TextDisplayBuilder();
         const commitButtonBuilder = new ButtonBuilder();
         const title = escapeBold(commitMessage);
-        commitDataBuilder.setContent(bold(title));
+        commitDataBuilder.setContent(`${bold(title)}\n${commitCommiterName}`);
         commitButtonBuilder.setStyle(ButtonStyle.Link);
         commitButtonBuilder.setLabel('Link');
         commitButtonBuilder.setURL(commitUrl);
@@ -48445,7 +48446,9 @@ const PushEventHandler = Object.freeze({
         const { commits } = pushEvent;
         const containerBuilder = new ContainerBuilder();
         const containerTitleBuilder = this._createTitleBuilder(pushEvent);
+        const containerSeparatorBuilder = new SeparatorBuilder();
         containerBuilder.addTextDisplayComponents(containerTitleBuilder);
+        containerBuilder.addSeparatorComponents(containerSeparatorBuilder);
         for (const commit of commits) {
             const containerCommitBuilder = this._createCommitBuilder(commit);
             containerBuilder.addSectionComponents(containerCommitBuilder);
