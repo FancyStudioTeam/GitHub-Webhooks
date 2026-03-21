@@ -48350,9 +48350,9 @@ const PURPLE_COLOR = 0x6366f1;class IssueClosedEventHandler {
     static _formatContainerTitle(issueClosedEvent) {
         const { issue, repository, sender } = issueClosedEvent;
         const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-        const { name: repositoryName } = repository;
+        const { name: repositoryFullName } = repository;
         const { login: senderLogin } = sender;
-        const title = escapeMarkdown(`[${repositoryName}] ${senderLogin} has Closed Issue #${issueNumber}`);
+        const title = escapeMarkdown(`[${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`);
         return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
     }
     static handle(issueClosedEvent) {
@@ -48381,9 +48381,9 @@ const PURPLE_COLOR = 0x6366f1;class IssueClosedEventHandler {
     static _formatContainerTitle(issueOpenedEvent) {
         const { issue, repository, sender } = issueOpenedEvent;
         const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-        const { name: repositoryName } = repository;
+        const { full_name: repositoryFullName } = repository;
         const { login: senderLogin } = sender;
-        const title = escapeMarkdown(`[${repositoryName}] ${senderLogin} has Opened Issue #${issueNumber}`);
+        const title = escapeMarkdown(`[${repositoryFullName}] ${senderLogin} has Opened Issue #${issueNumber}`);
         return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
     }
     static handle(issueOpenedEvent) {

@@ -23,11 +23,11 @@ export class IssueClosedEventHandler {
 		const { issue, repository, sender } = issueClosedEvent;
 
 		const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-		const { name: repositoryName } = repository;
+		const { name: repositoryFullName } = repository;
 		const { login: senderLogin } = sender;
 
 		const title = escapeMarkdown(
-			`[${repositoryName}] ${senderLogin} has Closed Issue #${issueNumber}`,
+			`[${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`,
 		);
 
 		return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);

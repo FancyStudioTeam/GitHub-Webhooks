@@ -45,11 +45,11 @@ export class IssueOpenedEventHandler {
 		const { issue, repository, sender } = issueOpenedEvent;
 
 		const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-		const { name: repositoryName } = repository;
+		const { full_name: repositoryFullName } = repository;
 		const { login: senderLogin } = sender;
 
 		const title = escapeMarkdown(
-			`[${repositoryName}] ${senderLogin} has Opened Issue #${issueNumber}`,
+			`[${repositoryFullName}] ${senderLogin} has Opened Issue #${issueNumber}`,
 		);
 
 		return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
