@@ -48340,9 +48340,9 @@ var integrationTypesPredicate2 = s3.array(
 function embedLength(data) {
   return (data.title?.length ?? 0) + (data.description?.length ?? 0) + (data.fields?.reduce((prev, curr) => prev + curr.name.length + curr.value.length, 0) ?? 0) + (data.footer?.text.length ?? 0) + (data.author?.name.length ?? 0);
 }
-__name(embedLength, "embedLength");const PURPLE_COLOR = 0x6366f1;const ISSUE_CLOSED_EMOJI = '<:_:1484923186083532841>';
+__name(embedLength, "embedLength");const PURPLE_COLOR = 0x6366f1;const GIT_COMMIT_EMOJI = '<:_:1484968687449411614>';
+const ISSUE_CLOSED_EMOJI = '<:_:1484923186083532841>';
 const ISSUE_OPENED_EMOJI = '<:_:1484922992378118184>';
-const PERSON_EMOJI = '<:_:1484960014903935137>';
 const REPO_PUSH_EMOJI = '<:_:1484953588789940426>';const IssueClosedEventHandler = Object.freeze({
     _createContainerTitle(issueClosedEvent) {
         const containerTitleString = IssueClosedEventHandler._formatContainerTitle(issueClosedEvent);
@@ -48405,26 +48405,28 @@ const REPO_PUSH_EMOJI = '<:_:1484953588789940426>';const IssueClosedEventHandler
         return containerBuilder;
     }
 }const GITHUB_COMMIT_HASH_LENGTH = 7;
+const GitHubUtils = Object.freeze({
+    formatBranch(referenceString) {
+        const references = referenceString.split('/');
+        const branch = references.at(-1);
+        return branch ?? 'unknown';
+    },
+    formatCommitHash(idString) {
+        return idString.slice(0, GITHUB_COMMIT_HASH_LENGTH);
+    },
+});
 const PushEventHandler = Object.freeze({
     _appendCommitsToContainer(containerBuilder, commits) {
-        for (const commit of commits) {
-            containerBuilder.addSectionComponents(this._createCommitBuilder(commit));
+        const containerCommits = [];
+        const containerCommitsBuilder = new TextDisplayBuilder();
+        for (const { id: commitId, message: commitMessage, url: commitUrl } of commits) {
+            const formattedCommitId = GitHubUtils.formatCommitHash(commitId);
+            const formattedCommitMessage = escapeBold(commitMessage);
+            const commitHyperlink = hyperlink(formattedCommitId, commitUrl);
+            containerCommits.push(bold(`${GIT_COMMIT_EMOJI} [${inlineCode(commitHyperlink)}] ${formattedCommitMessage}`));
         }
-    },
-    _createCommitBuilder(commit) {
-        const { committer: commitCommiter, message: commitMessage, url: commitUrl } = commit;
-        const { name: commitCommiterName } = commitCommiter;
-        const commitBuilder = new SectionBuilder();
-        const commitDataBuilder = new TextDisplayBuilder();
-        const commitButtonBuilder = new ButtonBuilder();
-        const title = escapeBold(commitMessage);
-        commitDataBuilder.setContent(`${bold(title)}\n${PERSON_EMOJI} ${commitCommiterName}`);
-        commitButtonBuilder.setStyle(ButtonStyle.Link);
-        commitButtonBuilder.setLabel('Link');
-        commitButtonBuilder.setURL(commitUrl);
-        commitBuilder.addTextDisplayComponents(commitDataBuilder);
-        commitBuilder.setButtonAccessory(commitButtonBuilder);
-        return commitBuilder;
+        containerCommitsBuilder.setContent(containerCommits.join('\n'));
+        containerBuilder.addTextDisplayComponents(containerCommitsBuilder);
     },
     _createContainerBuilder() {
         return new ContainerBuilder();
@@ -48442,17 +48444,9 @@ const PushEventHandler = Object.freeze({
         const { commits, compare, ref, repository } = pushEvent;
         const { length: commitsLength } = commits;
         const { name: repositoryName } = repository;
-        const branch = this._formatGitHubBranch(ref);
+        const branch = GitHubUtils.formatBranch(ref);
         const title = escapeMarkdown(`${REPO_PUSH_EMOJI} [${repositoryName}] ${commitsLength} new Commit(s) at ${branch}`);
         return heading(hyperlink(title, compare), HeadingLevel.Three);
-    },
-    _formatGitHubBranch(referenceString) {
-        const references = referenceString.split('/');
-        const branch = references.at(-1);
-        return branch ?? 'unknown';
-    },
-    _formatGitHubCommitHash(idString) {
-        return idString.slice(0, GITHUB_COMMIT_HASH_LENGTH);
     },
     handle(pushEvent) {
         const { commits } = pushEvent;
