@@ -23,7 +23,7 @@ export class IssueClosedEventHandler {
 		const { issue, repository, sender } = issueClosedEvent;
 
 		const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-		const { name: repositoryFullName } = repository;
+		const { full_name: repositoryFullName } = repository;
 		const { login: senderLogin } = sender;
 
 		const title = escapeMarkdown(

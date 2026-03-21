@@ -48350,7 +48350,7 @@ const PURPLE_COLOR = 0x6366f1;class IssueClosedEventHandler {
     static _formatContainerTitle(issueClosedEvent) {
         const { issue, repository, sender } = issueClosedEvent;
         const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-        const { name: repositoryFullName } = repository;
+        const { full_name: repositoryFullName } = repository;
         const { login: senderLogin } = sender;
         const title = escapeMarkdown(`[${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`);
         return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
