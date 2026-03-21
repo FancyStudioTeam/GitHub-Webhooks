@@ -12,6 +12,7 @@ import {
 import { IssuesOpenedEvent } from '@octokit/webhooks-types';
 
 import { GREEN_COLOR } from '#/lib/Colors.js';
+import { ISSUE_OPENED_EMOJI } from '#/lib/Emojis.js';
 
 export class IssueOpenedEventHandler {
 	private static _createContainerSubtitle(
@@ -49,7 +50,7 @@ export class IssueOpenedEventHandler {
 		const { login: senderLogin } = sender;
 
 		const title = escapeMarkdown(
-			`[${repositoryFullName}] ${senderLogin} has Opened Issue #${issueNumber}`,
+			`${ISSUE_OPENED_EMOJI} [${repositoryFullName}] ${senderLogin} has Opened Issue #${issueNumber}`,
 		);
 
 		return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);

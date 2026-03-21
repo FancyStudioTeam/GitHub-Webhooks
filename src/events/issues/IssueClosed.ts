@@ -9,6 +9,7 @@ import {
 import { IssuesClosedEvent } from '@octokit/webhooks-types';
 
 import { PURPLE_COLOR } from '#/lib/Colors.js';
+import { ISSUE_CLOSED_EMOJI } from '#/lib/Emojis.js';
 
 export class IssueClosedEventHandler {
 	private static _createContainerTitle(issueClosedEvent: IssuesClosedEvent): TextDisplayBuilder {
@@ -27,7 +28,7 @@ export class IssueClosedEventHandler {
 		const { login: senderLogin } = sender;
 
 		const title = escapeMarkdown(
-			`[${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`,
+			`${ISSUE_CLOSED_EMOJI} [${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`,
 		);
 
 		return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);

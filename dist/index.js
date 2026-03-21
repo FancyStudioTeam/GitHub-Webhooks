@@ -48341,7 +48341,8 @@ function embedLength(data) {
   return (data.title?.length ?? 0) + (data.description?.length ?? 0) + (data.fields?.reduce((prev, curr) => prev + curr.name.length + curr.value.length, 0) ?? 0) + (data.footer?.text.length ?? 0) + (data.author?.name.length ?? 0);
 }
 __name(embedLength, "embedLength");const GREEN_COLOR = 0x10b981;
-const PURPLE_COLOR = 0x6366f1;class IssueClosedEventHandler {
+const PURPLE_COLOR = 0x6366f1;const ISSUE_CLOSED_EMOJI = '<:_:1484923186083532841>';
+const ISSUE_OPENED_EMOJI = '<:_:1484922992378118184>';class IssueClosedEventHandler {
     static _createContainerTitle(issueClosedEvent) {
         const containerTitleString = IssueClosedEventHandler._formatContainerTitle(issueClosedEvent);
         const containerTitleBuilder = new TextDisplayBuilder().setContent(containerTitleString);
@@ -48352,7 +48353,7 @@ const PURPLE_COLOR = 0x6366f1;class IssueClosedEventHandler {
         const { html_url: issueHtmlUrl, number: issueNumber } = issue;
         const { full_name: repositoryFullName } = repository;
         const { login: senderLogin } = sender;
-        const title = escapeMarkdown(`[${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`);
+        const title = escapeMarkdown(`${ISSUE_CLOSED_EMOJI} [${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`);
         return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
     }
     static handle(issueClosedEvent) {
@@ -48383,7 +48384,7 @@ const PURPLE_COLOR = 0x6366f1;class IssueClosedEventHandler {
         const { html_url: issueHtmlUrl, number: issueNumber } = issue;
         const { full_name: repositoryFullName } = repository;
         const { login: senderLogin } = sender;
-        const title = escapeMarkdown(`[${repositoryFullName}] ${senderLogin} has Opened Issue #${issueNumber}`);
+        const title = escapeMarkdown(`${ISSUE_OPENED_EMOJI} [${repositoryFullName}] ${senderLogin} has Opened Issue #${issueNumber}`);
         return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
     }
     static handle(issueOpenedEvent) {
