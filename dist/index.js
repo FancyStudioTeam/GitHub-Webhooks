@@ -48340,71 +48340,90 @@ var integrationTypesPredicate2 = s3.array(
 function embedLength(data) {
   return (data.title?.length ?? 0) + (data.description?.length ?? 0) + (data.fields?.reduce((prev, curr) => prev + curr.name.length + curr.value.length, 0) ?? 0) + (data.footer?.text.length ?? 0) + (data.author?.name.length ?? 0);
 }
-__name(embedLength, "embedLength");const PURPLE_COLOR = 0x6366f1;const GIT_COMMIT_EMOJI = '<:_:1484968687449411614>';
-const ISSUE_CLOSED_EMOJI = '<:_:1484923186083532841>';
-const ISSUE_OPENED_EMOJI = '<:_:1484922992378118184>';
+__name(embedLength, "embedLength");const GREEN_COLOR = 0x10b981;
+const PURPLE_COLOR = 0x6366f1;const GIT_COMMIT_EMOJI = '<:_:1484968687449411614>';
+const ISSUE_CLOSED_EMOJI = '<:_:1484998086764789780>';
+const ISSUE_OPENED_EMOJI = '<:_:1484998753004814546>';
 const REPO_PUSH_EMOJI = '<:_:1484953588789940426>';const IssueClosedEventHandler = Object.freeze({
-    _createContainerTitle(issueClosedEvent) {
-        const containerTitleString = IssueClosedEventHandler._formatContainerTitle(issueClosedEvent);
-        const containerTitleBuilder = new TextDisplayBuilder().setContent(containerTitleString);
-        return containerTitleBuilder;
+    createContainerBuilder() {
+        return new ContainerBuilder();
     },
-    _formatContainerTitle(issueClosedEvent) {
-        const { issue, repository, sender } = issueClosedEvent;
+    createTitleBuilder(issueClosedEvent) {
+        const titleString = this.formatContainerTitle(issueClosedEvent);
+        const titleBuilder = new TextDisplayBuilder();
+        titleBuilder.setContent(titleString);
+        return titleBuilder;
+    },
+    formatContainerTitle({ issue, repository, sender }) {
         const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-        const { full_name: repositoryFullName } = repository;
+        const { name: repositoryName } = repository;
         const { login: senderLogin } = sender;
-        const title = escapeMarkdown(`${ISSUE_CLOSED_EMOJI} [${repositoryFullName}] ${senderLogin} has Closed Issue #${issueNumber}`);
-        return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
+        const formattedTitle = escapeMarkdown(`${ISSUE_CLOSED_EMOJI} [${repositoryName}] ${senderLogin} has Closed Issue #${issueNumber}`);
+        return heading(hyperlink(formattedTitle, issueHtmlUrl), HeadingLevel.Three);
     },
     handle(issueClosedEvent) {
-        const containerBuilder = new ContainerBuilder();
-        const containerTitleBuilder = IssueClosedEventHandler._createContainerTitle(issueClosedEvent);
+        const containerBuilder = this.createContainerBuilder();
+        const containerTitleBuilder = this.createTitleBuilder(issueClosedEvent);
         containerBuilder.setAccentColor(PURPLE_COLOR);
         containerBuilder.addTextDisplayComponents(containerTitleBuilder);
         return containerBuilder;
     },
-});class IssueOpenedEventHandler {
-    static _createContainerSubtitleBuilder(issueOpenedEvent) {
-        const containerSubtitleString = IssueOpenedEventHandler._formatContainerSubtitle(issueOpenedEvent);
-        const containerSubtitleBuilder = new TextDisplayBuilder().setContent(containerSubtitleString);
-        return containerSubtitleBuilder;
-    }
-    static _createContainerTitleBuilder(issueOpenedEvent) {
-        const containerTitleString = IssueOpenedEventHandler._formatContainerTitle(issueOpenedEvent);
-        const containerTitleBuilder = new TextDisplayBuilder().setContent(containerTitleString);
-        return containerTitleBuilder;
-    }
-    static _formatContainerSubtitle(issueOpenedEvent) {
-        const { issue } = issueOpenedEvent;
-        const { title: issueTitle } = issue;
-        return bold(escapeBold(issueTitle));
-    }
-    static _formatContainerTitle(issueOpenedEvent) {
-        const { issue, repository, sender } = issueOpenedEvent;
-        const { html_url: issueHtmlUrl, number: issueNumber } = issue;
-        const { full_name: repositoryFullName } = repository;
-        const { login: senderLogin } = sender;
-        const title = escapeMarkdown(`${ISSUE_OPENED_EMOJI} [${repositoryFullName}] ${senderLogin} has Opened Issue #${issueNumber}`);
-        return heading(hyperlink(title, issueHtmlUrl), HeadingLevel.Three);
-    }
-    static handle(issueOpenedEvent) {
-        const { issue } = issueOpenedEvent;
-        const { body: issueBody } = issue;
-        const containerBuilder = new ContainerBuilder();
-        const containerTitleBuilder = IssueOpenedEventHandler._createContainerTitleBuilder(issueOpenedEvent);
-        const containerSubtitleBuilder = IssueOpenedEventHandler._createContainerSubtitleBuilder(issueOpenedEvent);
-        containerBuilder.addTextDisplayComponents(containerTitleBuilder, containerSubtitleBuilder);
+});const IssueOpenedEventHandler = Object.freeze({
+    appendBodyToContainer(containerBuilder, issueBody) {
         if (issueBody) {
-            const containerSeparatorBuilder = new SeparatorBuilder();
-            const containerBodyBuilder = new TextDisplayBuilder();
+            const containerSeparatorBuilder = this.createSeparatorBuilder();
+            const containerBodyBuilder = this.createTextDisplayBuilder();
             containerBodyBuilder.setContent(issueBody);
             containerBuilder.addSeparatorComponents(containerSeparatorBuilder);
             containerBuilder.addTextDisplayComponents(containerBodyBuilder);
         }
+    },
+    createContainerBuilder() {
+        return new ContainerBuilder();
+    },
+    createSeparatorBuilder() {
+        return new SeparatorBuilder();
+    },
+    createSubtitleBuilder(issueOpenedEvent) {
+        const subtitleString = this.formatContainerSubtitle(issueOpenedEvent);
+        const subtitleBuilder = this.createTextDisplayBuilder();
+        subtitleBuilder.setContent(subtitleString);
+        return subtitleBuilder;
+    },
+    createTextDisplayBuilder() {
+        return new TextDisplayBuilder();
+    },
+    createTitleBuilder(issueOpenedEvent) {
+        const titleString = this.formatContainerTitle(issueOpenedEvent);
+        const titleBuilder = this.createTextDisplayBuilder();
+        titleBuilder.setContent(titleString);
+        return titleBuilder;
+    },
+    formatContainerSubtitle(issueOpenedEvent) {
+        const { issue } = issueOpenedEvent;
+        const { title: issueTitle } = issue;
+        return bold(escapeBold(issueTitle));
+    },
+    formatContainerTitle(issueOpenedEvent) {
+        const { issue, repository, sender } = issueOpenedEvent;
+        const { html_url: issueHtmlUrl, number: issueNumber } = issue;
+        const { name: repositoryName } = repository;
+        const { login: senderLogin } = sender;
+        const formattedTitle = escapeMarkdown(`${ISSUE_OPENED_EMOJI} [${repositoryName}] ${senderLogin} has Opened Issue #${issueNumber}`);
+        return heading(hyperlink(formattedTitle, issueHtmlUrl), HeadingLevel.Three);
+    },
+    handle(issueOpenedEvent) {
+        const { issue } = issueOpenedEvent;
+        const { body: issueBody } = issue;
+        const containerBuilder = this.createContainerBuilder();
+        const containerTitleBuilder = this.createTitleBuilder(issueOpenedEvent);
+        const containerSubtitleBuilder = this.createSubtitleBuilder(issueOpenedEvent);
+        containerBuilder.setAccentColor(GREEN_COLOR);
+        containerBuilder.addTextDisplayComponents(containerTitleBuilder, containerSubtitleBuilder);
+        this.appendBodyToContainer(containerBuilder, issueBody);
         return containerBuilder;
-    }
-}const GITHUB_COMMIT_HASH_LENGTH = 7;
+    },
+});const GITHUB_COMMIT_HASH_LENGTH = 7;
 const GitHubUtils = Object.freeze({
     formatBranch(referenceString) {
         const references = referenceString.split('/');
@@ -48416,9 +48435,9 @@ const GitHubUtils = Object.freeze({
     },
 });
 const PushEventHandler = Object.freeze({
-    _appendCommitsToContainer(containerBuilder, commits) {
+    appendCommitsToContainer(containerBuilder, commits) {
         const containerCommits = [];
-        const containerCommitsBuilder = new TextDisplayBuilder();
+        const containerCommitsBuilder = this.createTextDisplayBuilder();
         for (const { id: commitId, message: commitMessage, url: commitUrl } of commits) {
             const formattedCommitId = GitHubUtils.formatCommitId(commitId);
             const formattedCommitMessage = escapeBold(commitMessage);
@@ -48428,19 +48447,22 @@ const PushEventHandler = Object.freeze({
         containerCommitsBuilder.setContent(containerCommits.join('\n'));
         containerBuilder.addTextDisplayComponents(containerCommitsBuilder);
     },
-    _createContainerBuilder() {
+    createContainerBuilder() {
         return new ContainerBuilder();
     },
-    _createSeparatorBuilder() {
+    createSeparatorBuilder() {
         return new SeparatorBuilder();
     },
-    _createTitleBuilder(pushEvent) {
-        const titleString = this._formatContainerTitle(pushEvent);
-        const titleBuilder = new TextDisplayBuilder();
+    createTextDisplayBuilder() {
+        return new TextDisplayBuilder();
+    },
+    createTitleBuilder(pushEvent) {
+        const titleString = this.formatContainerTitle(pushEvent);
+        const titleBuilder = this.createTextDisplayBuilder();
         titleBuilder.setContent(titleString);
         return titleBuilder;
     },
-    _formatContainerTitle({ commits, compare, ref, repository }) {
+    formatContainerTitle({ commits, compare, ref, repository }) {
         const { length: commitsLength } = commits;
         const { name: repositoryName } = repository;
         const formattedBranch = GitHubUtils.formatBranch(ref);
@@ -48449,12 +48471,12 @@ const PushEventHandler = Object.freeze({
     },
     handle(pushEvent) {
         const { commits } = pushEvent;
-        const containerBuilder = this._createContainerBuilder();
-        const containerTitleBuilder = this._createTitleBuilder(pushEvent);
-        const containerSeparatorBuilder = this._createSeparatorBuilder();
+        const containerBuilder = this.createContainerBuilder();
+        const containerTitleBuilder = this.createTitleBuilder(pushEvent);
+        const containerSeparatorBuilder = this.createSeparatorBuilder();
         containerBuilder.addTextDisplayComponents(containerTitleBuilder);
         containerBuilder.addSeparatorComponents(containerSeparatorBuilder);
-        this._appendCommitsToContainer(containerBuilder, commits);
+        this.appendCommitsToContainer(containerBuilder, commits);
         return containerBuilder;
     },
 });class WebhookClient {
