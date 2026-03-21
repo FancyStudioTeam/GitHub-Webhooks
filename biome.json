@@ -1,0 +1,104 @@
+{
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"assist": {
+		"actions": {
+			"recommended": true,
+			"source": {
+				"organizeImports": "on",
+				"useSortedInterfaceMembers": "on",
+				"useSortedKeys": "on"
+			}
+		},
+		"enabled": true
+	},
+	"files": {
+		"includes": ["**", "!!**/dist"]
+	},
+	"formatter": {
+		"enabled": true,
+		"expand": "always",
+		"indentStyle": "tab",
+		"indentWidth": 4,
+		"lineEnding": "lf",
+		"lineWidth": 120
+	},
+	"javascript": {
+		"formatter": {
+			"jsxQuoteStyle": "single",
+			"quoteStyle": "single"
+		}
+	},
+	"linter": {
+		"domains": {
+			"project": "all",
+			"types": "all"
+		},
+		"enabled": true,
+		"rules": {
+			"complexity": {
+				"noImplicitCoercions": "error",
+				"noStaticOnlyClass": "warn",
+				"useSimplifiedLogicExpression": "error"
+			},
+			"correctness": {
+				"noNodejsModules": "warn",
+				"noUndeclaredDependencies": {
+					"level": "error",
+					"options": {
+						"devDependencies": true,
+						"optionalDependencies": true
+					}
+				},
+				"noUnresolvedImports": "error",
+				"noUnusedImports": {
+					"fix": "safe",
+					"level": "error"
+				},
+				"noUnusedVariables": "error",
+				"useImportExtensions": {
+					"level": "error",
+					"options": {
+						"forceJsExtensions": true
+					}
+				}
+			},
+			"performance": {
+				"noBarrelFile": "error",
+				"noReExportAll": "error"
+			},
+			"recommended": true,
+			"style": {
+				"noCommonJs": "error",
+				"noDefaultExport": "off",
+				"noMagicNumbers": "error",
+				"noUnusedTemplateLiteral": "error",
+				"useBlockStatements": "error",
+				"useImportType": "error",
+				"useNamingConvention": "error",
+				"useNodejsImportProtocol": {
+					"fix": "safe",
+					"level": "error"
+				},
+				"useReadonlyClassProperties": {
+					"level": "error",
+					"options": {
+						"checkAllProperties": true
+					}
+				},
+				"useUnifiedTypeSignatures": "error"
+			},
+			"suspicious": {
+				"noEmptyBlockStatements": "error",
+				"noUnassignedVariables": "error",
+				"useAwait": "error"
+			}
+		}
+	},
+	"root": true,
+	"vcs": {
+		"clientKind": "git",
+		"defaultBranch": "main",
+		"enabled": true,
+		"useIgnoreFile": true
+	}
+}
