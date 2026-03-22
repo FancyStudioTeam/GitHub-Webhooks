@@ -20,13 +20,13 @@ export async function handleEvent(webhookClient: WebhookClient, gitHubContext: G
 						{
 							action: 'closed',
 						},
-						IssueClosedEventHandler.handle,
+						(payload) => IssueClosedEventHandler.handle(payload),
 					)
 					.with(
 						{
 							action: 'opened',
 						},
-						IssueOpenedEventHandler.handle,
+						(payload) => IssueOpenedEventHandler.handle(payload),
 					)
 					.with(P._, () => undefined)
 					.run(),

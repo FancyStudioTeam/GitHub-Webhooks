@@ -48495,10 +48495,10 @@ const PushEventHandler = Object.freeze({
         .returnType()
         .with({
         action: 'closed',
-    }, IssueClosedEventHandler.handle)
+    }, (payload) => IssueClosedEventHandler.handle(payload))
         .with({
         action: 'opened',
-    }, IssueOpenedEventHandler.handle)
+    }, (payload) => IssueOpenedEventHandler.handle(payload))
         .with(z$1._, () => undefined)
         .run())
         .with({
