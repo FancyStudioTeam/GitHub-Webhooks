@@ -1,23 +1,21 @@
 import { getInput, info, setFailed } from '@actions/core';
 import { context } from '@actions/github';
-import { EventHandlersMap } from './lib/Handlers.js';
+import { handleEvent } from './lib/Handlers.js';
+import type { GitHubContext } from './lib/Types.js';
 import { WebhookClient } from './structures/WebhookClient.js';
 
 (async () => {
-	showContextData(context);
+	const gitHubContext = context as unknown as GitHubContext;
 
-	const { eventName, payload } = context;
+	showContextData(gitHubContext);
 
 	const webhookId = getInput('webhook_id');
 	const webhookToken = getInput('webhook_token');
 
-	try {
-		const webhookClient = new WebhookClient(webhookId, webhookToken);
-		const eventHandler = EventHandlersMap.get(eventName);
+	const webhookClient = new WebhookClient(webhookId, webhookToken);
 
-		if (eventHandler) {
-			await eventHandler(webhookClient, payload);
-		}
+	try {
+		await handleEvent(webhookClient, gitHubContext);
 	} catch {
 		setFailed('❌ Something went wrong while executing the action [Unknown Error]');
 	}
@@ -26,5 +24,3 @@ import { WebhookClient } from './structures/WebhookClient.js';
 function showContextData(gitHubContext: GitHubContext): void {
 	info(`ℹ️ Context Information: ${JSON.stringify(gitHubContext, null, 4)}`);
 }
-
-type GitHubContext = typeof context;

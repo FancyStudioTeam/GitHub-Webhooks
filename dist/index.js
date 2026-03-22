@@ -32584,7 +32584,7 @@ const defaults = {
         fetch: getProxyFetch(baseUrl)
     }
 };
-Octokit.plugin(restEndpointMethods, paginateRest).defaults(defaults);const context = new Context();const t$3=Symbol.for("@ts-pattern/matcher"),e$2=Symbol.for("@ts-pattern/isVariadic"),n$2="@ts-pattern/anonymous-select-key",r$2=t=>Boolean(t&&"object"==typeof t),i$2=e=>e&&!!e[t$3],o$3=(n,s,c)=>{if(i$2(n)){const e=n[t$3](),{matched:r,selections:i}=e.match(s);return r&&i&&Object.keys(i).forEach(t=>c(t,i[t])),r}if(r$2(n)){if(!r$2(s))return  false;if(Array.isArray(n)){if(!Array.isArray(s))return  false;let t=[],r=[],u=[];for(const o of n.keys()){const s=n[o];i$2(s)&&s[e$2]?u.push(s):u.length?r.push(s):t.push(s);}if(u.length){if(u.length>1)throw new Error("Pattern error: Using `...P.array(...)` several times in a single pattern is not allowed.");if(s.length<t.length+r.length)return  false;const e=s.slice(0,t.length),n=0===r.length?[]:s.slice(-r.length),i=s.slice(t.length,0===r.length?Infinity:-r.length);return t.every((t,n)=>o$3(t,e[n],c))&&r.every((t,e)=>o$3(t,n[e],c))&&(0===u.length||o$3(u[0],i,c))}return n.length===s.length&&n.every((t,e)=>o$3(t,s[e],c))}return Reflect.ownKeys(n).every(e=>{const r=n[e];return (e in s||i$2(u=r)&&"optional"===u[t$3]().matcherType)&&o$3(r,s[e],c);var u;})}return Object.is(s,n)},s$1=e=>{var n,o,u;return r$2(e)?i$2(e)?null!=(n=null==(o=(u=e[t$3]()).getSelectionKeys)?void 0:o.call(u))?n:[]:Array.isArray(e)?c$2(e,s$1):c$2(Object.values(e),s$1):[]},c$2=(t,e)=>t.reduce((t,n)=>t.concat(e(n)),[]);function a$1(t){return Object.assign(t,{optional:()=>h$1(t),and:e=>d$1(t,e),or:e=>y$1(t,e),select:e=>void 0===e?v$1(t):v$1(e,t)})}function h$1(e){return a$1({[t$3]:()=>({match:t=>{let n={};const r=(t,e)=>{n[t]=e;};return void 0===t?(s$1(e).forEach(t=>r(t,void 0)),{matched:true,selections:n}):{matched:o$3(e,t,r),selections:n}},getSelectionKeys:()=>s$1(e),matcherType:"optional"})})}function d$1(...e){return a$1({[t$3]:()=>({match:t=>{let n={};const r=(t,e)=>{n[t]=e;};return {matched:e.every(e=>o$3(e,t,r)),selections:n}},getSelectionKeys:()=>c$2(e,s$1),matcherType:"and"})})}function y$1(...e){return a$1({[t$3]:()=>({match:t=>{let n={};const r=(t,e)=>{n[t]=e;};return c$2(e,s$1).forEach(t=>r(t,void 0)),{matched:e.some(e=>o$3(e,t,r)),selections:n}},getSelectionKeys:()=>c$2(e,s$1),matcherType:"or"})})}function p$1(e){return {[t$3]:()=>({match:t=>({matched:Boolean(e(t))})})}}function v$1(...e){const r="string"==typeof e[0]?e[0]:void 0,i=2===e.length?e[1]:"string"==typeof e[0]?void 0:e[0];return a$1({[t$3]:()=>({match:t=>{let e={[null!=r?r:n$2]:t};return {matched:void 0===i||o$3(i,t,(t,n)=>{e[t]=n;}),selections:e}},getSelectionKeys:()=>[null!=r?r:n$2].concat(void 0===i?[]:s$1(i))})})}function b$1(t){return  true}function w$1(t){return "number"==typeof t}function S$1(t){return "string"==typeof t}function j$1(t){return "bigint"==typeof t}a$1(p$1(b$1));a$1(p$1(b$1));const x$1=t=>Object.assign(a$1(t),{startsWith:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&t.startsWith(n)))));var n;},endsWith:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&t.endsWith(n)))));var n;},minLength:e=>x$1(d$1(t,(t=>p$1(e=>S$1(e)&&e.length>=t))(e))),length:e=>x$1(d$1(t,(t=>p$1(e=>S$1(e)&&e.length===t))(e))),maxLength:e=>x$1(d$1(t,(t=>p$1(e=>S$1(e)&&e.length<=t))(e))),includes:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&t.includes(n)))));var n;},regex:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&Boolean(t.match(n))))));var n;}});x$1(p$1(S$1));const N$1=t=>Object.assign(a$1(t),{between:(e,n)=>N$1(d$1(t,((t,e)=>p$1(n=>w$1(n)&&t<=n&&e>=n))(e,n))),lt:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e<t))(e))),gt:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e>t))(e))),lte:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e<=t))(e))),gte:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e>=t))(e))),int:()=>N$1(d$1(t,p$1(t=>w$1(t)&&Number.isInteger(t)))),finite:()=>N$1(d$1(t,p$1(t=>w$1(t)&&Number.isFinite(t)))),positive:()=>N$1(d$1(t,p$1(t=>w$1(t)&&t>0))),negative:()=>N$1(d$1(t,p$1(t=>w$1(t)&&t<0)))});N$1(p$1(w$1));const k$1=t=>Object.assign(a$1(t),{between:(e,n)=>k$1(d$1(t,((t,e)=>p$1(n=>j$1(n)&&t<=n&&e>=n))(e,n))),lt:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e<t))(e))),gt:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e>t))(e))),lte:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e<=t))(e))),gte:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e>=t))(e))),positive:()=>k$1(d$1(t,p$1(t=>j$1(t)&&t>0))),negative:()=>k$1(d$1(t,p$1(t=>j$1(t)&&t<0)))});k$1(p$1(j$1));a$1(p$1(function(t){return "boolean"==typeof t}));a$1(p$1(function(t){return "symbol"==typeof t}));a$1(p$1(function(t){return null==t}));a$1(p$1(function(t){return null!=t}));let I$1=class I extends Error{constructor(t){let e;try{e=JSON.stringify(t);}catch(n){e=t;}super(`Pattern matching error: no pattern matches value ${e}`),this.input=void 0,this.input=t;}};const L$1={matched:false,value:void 0};function M$1(t){return new R$1(t,L$1)}let R$1=class R{constructor(t,e){this.input=void 0,this.state=void 0,this.input=t,this.state=e;}with(...t){if(this.state.matched)return this;const e=t[t.length-1],r=[t[0]];let i;3===t.length&&"function"==typeof t[1]?i=t[1]:t.length>2&&r.push(...t.slice(1,t.length-1));let s=false,c={};const u=(t,e)=>{s=true,c[t]=e;},a=!r.some(t=>o$3(t,this.input,u))||i&&!Boolean(i(this.input))?L$1:{matched:true,value:e(s?n$2 in c?c[n$2]:c:this.input,this.input)};return new R(this.input,a)}when(t,e){if(this.state.matched)return this;const n=Boolean(t(this.input));return new R(this.input,n?{matched:true,value:e(this.input,this.input)}:L$1)}otherwise(t){return this.state.matched?this.state.value:t(this.input)}exhaustive(t=F$1){return this.state.matched?this.state.value:t(this.input)}run(){return this.exhaustive()}returnType(){return this}narrow(){return this}};function F$1(t){throw new I$1(t)}/**
+Octokit.plugin(restEndpointMethods, paginateRest).defaults(defaults);const context = new Context();const t$3=Symbol.for("@ts-pattern/matcher"),e$2=Symbol.for("@ts-pattern/isVariadic"),n$2="@ts-pattern/anonymous-select-key",r$2=t=>Boolean(t&&"object"==typeof t),i$2=e=>e&&!!e[t$3],o$3=(n,s,c)=>{if(i$2(n)){const e=n[t$3](),{matched:r,selections:i}=e.match(s);return r&&i&&Object.keys(i).forEach(t=>c(t,i[t])),r}if(r$2(n)){if(!r$2(s))return  false;if(Array.isArray(n)){if(!Array.isArray(s))return  false;let t=[],r=[],u=[];for(const o of n.keys()){const s=n[o];i$2(s)&&s[e$2]?u.push(s):u.length?r.push(s):t.push(s);}if(u.length){if(u.length>1)throw new Error("Pattern error: Using `...P.array(...)` several times in a single pattern is not allowed.");if(s.length<t.length+r.length)return  false;const e=s.slice(0,t.length),n=0===r.length?[]:s.slice(-r.length),i=s.slice(t.length,0===r.length?Infinity:-r.length);return t.every((t,n)=>o$3(t,e[n],c))&&r.every((t,e)=>o$3(t,n[e],c))&&(0===u.length||o$3(u[0],i,c))}return n.length===s.length&&n.every((t,e)=>o$3(t,s[e],c))}return Reflect.ownKeys(n).every(e=>{const r=n[e];return (e in s||i$2(u=r)&&"optional"===u[t$3]().matcherType)&&o$3(r,s[e],c);var u;})}return Object.is(s,n)},s$1=e=>{var n,o,u;return r$2(e)?i$2(e)?null!=(n=null==(o=(u=e[t$3]()).getSelectionKeys)?void 0:o.call(u))?n:[]:Array.isArray(e)?c$2(e,s$1):c$2(Object.values(e),s$1):[]},c$2=(t,e)=>t.reduce((t,n)=>t.concat(e(n)),[]);function a$1(t){return Object.assign(t,{optional:()=>h$1(t),and:e=>d$1(t,e),or:e=>y$1(t,e),select:e=>void 0===e?v$1(t):v$1(e,t)})}function h$1(e){return a$1({[t$3]:()=>({match:t=>{let n={};const r=(t,e)=>{n[t]=e;};return void 0===t?(s$1(e).forEach(t=>r(t,void 0)),{matched:true,selections:n}):{matched:o$3(e,t,r),selections:n}},getSelectionKeys:()=>s$1(e),matcherType:"optional"})})}function d$1(...e){return a$1({[t$3]:()=>({match:t=>{let n={};const r=(t,e)=>{n[t]=e;};return {matched:e.every(e=>o$3(e,t,r)),selections:n}},getSelectionKeys:()=>c$2(e,s$1),matcherType:"and"})})}function y$1(...e){return a$1({[t$3]:()=>({match:t=>{let n={};const r=(t,e)=>{n[t]=e;};return c$2(e,s$1).forEach(t=>r(t,void 0)),{matched:e.some(e=>o$3(e,t,r)),selections:n}},getSelectionKeys:()=>c$2(e,s$1),matcherType:"or"})})}function p$1(e){return {[t$3]:()=>({match:t=>({matched:Boolean(e(t))})})}}function v$1(...e){const r="string"==typeof e[0]?e[0]:void 0,i=2===e.length?e[1]:"string"==typeof e[0]?void 0:e[0];return a$1({[t$3]:()=>({match:t=>{let e={[null!=r?r:n$2]:t};return {matched:void 0===i||o$3(i,t,(t,n)=>{e[t]=n;}),selections:e}},getSelectionKeys:()=>[null!=r?r:n$2].concat(void 0===i?[]:s$1(i))})})}function b$1(t){return  true}function w$1(t){return "number"==typeof t}function S$1(t){return "string"==typeof t}function j$1(t){return "bigint"==typeof t}const K$1=a$1(p$1(b$1));a$1(p$1(b$1));const E$1=K$1,x$1=t=>Object.assign(a$1(t),{startsWith:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&t.startsWith(n)))));var n;},endsWith:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&t.endsWith(n)))));var n;},minLength:e=>x$1(d$1(t,(t=>p$1(e=>S$1(e)&&e.length>=t))(e))),length:e=>x$1(d$1(t,(t=>p$1(e=>S$1(e)&&e.length===t))(e))),maxLength:e=>x$1(d$1(t,(t=>p$1(e=>S$1(e)&&e.length<=t))(e))),includes:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&t.includes(n)))));var n;},regex:e=>{return x$1(d$1(t,(n=e,p$1(t=>S$1(t)&&Boolean(t.match(n))))));var n;}});x$1(p$1(S$1));const N$1=t=>Object.assign(a$1(t),{between:(e,n)=>N$1(d$1(t,((t,e)=>p$1(n=>w$1(n)&&t<=n&&e>=n))(e,n))),lt:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e<t))(e))),gt:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e>t))(e))),lte:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e<=t))(e))),gte:e=>N$1(d$1(t,(t=>p$1(e=>w$1(e)&&e>=t))(e))),int:()=>N$1(d$1(t,p$1(t=>w$1(t)&&Number.isInteger(t)))),finite:()=>N$1(d$1(t,p$1(t=>w$1(t)&&Number.isFinite(t)))),positive:()=>N$1(d$1(t,p$1(t=>w$1(t)&&t>0))),negative:()=>N$1(d$1(t,p$1(t=>w$1(t)&&t<0)))});N$1(p$1(w$1));const k$1=t=>Object.assign(a$1(t),{between:(e,n)=>k$1(d$1(t,((t,e)=>p$1(n=>j$1(n)&&t<=n&&e>=n))(e,n))),lt:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e<t))(e))),gt:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e>t))(e))),lte:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e<=t))(e))),gte:e=>k$1(d$1(t,(t=>p$1(e=>j$1(e)&&e>=t))(e))),positive:()=>k$1(d$1(t,p$1(t=>j$1(t)&&t>0))),negative:()=>k$1(d$1(t,p$1(t=>j$1(t)&&t<0)))});k$1(p$1(j$1));a$1(p$1(function(t){return "boolean"==typeof t}));a$1(p$1(function(t){return "symbol"==typeof t}));a$1(p$1(function(t){return null==t}));a$1(p$1(function(t){return null!=t}));var z$1={__proto__:null,_:E$1};let I$1=class I extends Error{constructor(t){let e;try{e=JSON.stringify(t);}catch(n){e=t;}super(`Pattern matching error: no pattern matches value ${e}`),this.input=void 0,this.input=t;}};const L$1={matched:false,value:void 0};function M$1(t){return new R$1(t,L$1)}let R$1=class R{constructor(t,e){this.input=void 0,this.state=void 0,this.input=t,this.state=e;}with(...t){if(this.state.matched)return this;const e=t[t.length-1],r=[t[0]];let i;3===t.length&&"function"==typeof t[1]?i=t[1]:t.length>2&&r.push(...t.slice(1,t.length-1));let s=false,c={};const u=(t,e)=>{s=true,c[t]=e;},a=!r.some(t=>o$3(t,this.input,u))||i&&!Boolean(i(this.input))?L$1:{matched:true,value:e(s?n$2 in c?c[n$2]:c:this.input,this.input)};return new R(this.input,a)}when(t,e){if(this.state.matched)return this;const n=Boolean(t(this.input));return new R(this.input,n?{matched:true,value:e(this.input,this.input)}:L$1)}otherwise(t){return this.state.matched?this.state.value:t(this.input)}exhaustive(t=F$1){return this.state.matched?this.state.value:t(this.input)}run(){return this.exhaustive()}returnType(){return this}narrow(){return this}};function F$1(t){throw new I$1(t)}/**
  * Checks if `value` is classified as an `Array` object.
  *
  * @static
@@ -48347,8 +48347,90 @@ var integrationTypesPredicate2 = s3.array(
 function embedLength(data) {
   return (data.title?.length ?? 0) + (data.description?.length ?? 0) + (data.fields?.reduce((prev, curr) => prev + curr.name.length + curr.value.length, 0) ?? 0) + (data.footer?.text.length ?? 0) + (data.author?.name.length ?? 0);
 }
-__name(embedLength, "embedLength");const GIT_COMMIT_EMOJI = '<:_:1484968687449411614>';
-const REPO_PUSH_EMOJI = '<:_:1484953588789940426>';const GITHUB_COMMIT_HASH_LENGTH = 7;
+__name(embedLength, "embedLength");const GREEN_COLOR = 0x10b981;
+const PURPLE_COLOR = 0x6366f1;const GIT_COMMIT_EMOJI = '<:_:1484968687449411614>';
+const ISSUE_CLOSED_EMOJI = '<:_:1484998086764789780>';
+const ISSUE_OPENED_EMOJI = '<:_:1484998753004814546>';
+const REPO_PUSH_EMOJI = '<:_:1484953588789940426>';const IssueClosedEventHandler = Object.freeze({
+    createContainerBuilder() {
+        return new ContainerBuilder();
+    },
+    createTitleBuilder(issueClosedEvent) {
+        const titleString = this.formatContainerTitle(issueClosedEvent);
+        const titleBuilder = new TextDisplayBuilder();
+        titleBuilder.setContent(titleString);
+        return titleBuilder;
+    },
+    formatContainerTitle({ issue, repository, sender }) {
+        const { html_url: issueHtmlUrl, number: issueNumber } = issue;
+        const { name: repositoryName } = repository;
+        const { login: senderLogin } = sender;
+        const formattedTitle = escapeMarkdown(`${ISSUE_CLOSED_EMOJI} [${repositoryName}] ${senderLogin} has Closed Issue #${issueNumber}`);
+        return heading(hyperlink(formattedTitle, issueHtmlUrl), HeadingLevel.Three);
+    },
+    handle(issueClosedEvent) {
+        const containerBuilder = this.createContainerBuilder();
+        const containerTitleBuilder = this.createTitleBuilder(issueClosedEvent);
+        containerBuilder.setAccentColor(PURPLE_COLOR);
+        containerBuilder.addTextDisplayComponents(containerTitleBuilder);
+        return containerBuilder;
+    },
+});const IssueOpenedEventHandler = Object.freeze({
+    appendBodyToContainer(containerBuilder, issueBody) {
+        if (issueBody) {
+            const containerSeparatorBuilder = this.createSeparatorBuilder();
+            const containerBodyBuilder = this.createTextDisplayBuilder();
+            containerBodyBuilder.setContent(issueBody);
+            containerBuilder.addSeparatorComponents(containerSeparatorBuilder);
+            containerBuilder.addTextDisplayComponents(containerBodyBuilder);
+        }
+    },
+    createContainerBuilder() {
+        return new ContainerBuilder();
+    },
+    createSeparatorBuilder() {
+        return new SeparatorBuilder();
+    },
+    createSubtitleBuilder(issueOpenedEvent) {
+        const subtitleString = this.formatContainerSubtitle(issueOpenedEvent);
+        const subtitleBuilder = this.createTextDisplayBuilder();
+        subtitleBuilder.setContent(subtitleString);
+        return subtitleBuilder;
+    },
+    createTextDisplayBuilder() {
+        return new TextDisplayBuilder();
+    },
+    createTitleBuilder(issueOpenedEvent) {
+        const titleString = this.formatContainerTitle(issueOpenedEvent);
+        const titleBuilder = this.createTextDisplayBuilder();
+        titleBuilder.setContent(titleString);
+        return titleBuilder;
+    },
+    formatContainerSubtitle(issueOpenedEvent) {
+        const { issue } = issueOpenedEvent;
+        const { title: issueTitle } = issue;
+        return bold(escapeBold(issueTitle));
+    },
+    formatContainerTitle(issueOpenedEvent) {
+        const { issue, repository, sender } = issueOpenedEvent;
+        const { html_url: issueHtmlUrl, number: issueNumber } = issue;
+        const { name: repositoryName } = repository;
+        const { login: senderLogin } = sender;
+        const formattedTitle = escapeMarkdown(`${ISSUE_OPENED_EMOJI} [${repositoryName}] ${senderLogin} has Opened Issue #${issueNumber}`);
+        return heading(hyperlink(formattedTitle, issueHtmlUrl), HeadingLevel.Three);
+    },
+    handle(issueOpenedEvent) {
+        const { issue } = issueOpenedEvent;
+        const { body: issueBody } = issue;
+        const containerBuilder = this.createContainerBuilder();
+        const containerTitleBuilder = this.createTitleBuilder(issueOpenedEvent);
+        const containerSubtitleBuilder = this.createSubtitleBuilder(issueOpenedEvent);
+        containerBuilder.setAccentColor(GREEN_COLOR);
+        containerBuilder.addTextDisplayComponents(containerTitleBuilder, containerSubtitleBuilder);
+        this.appendBodyToContainer(containerBuilder, issueBody);
+        return containerBuilder;
+    },
+});const GITHUB_COMMIT_HASH_LENGTH = 7;
 const GitHubUtils = Object.freeze({
     formatBranch(referenceString) {
         const references = referenceString.split('/');
@@ -48404,16 +48486,29 @@ const PushEventHandler = Object.freeze({
         this.appendCommitsToContainer(containerBuilder, commits);
         return containerBuilder;
     },
-});function handleEvent(webhookClient, gitHubContext) {
-    M$1(gitHubContext)
+});async function handleEvent(webhookClient, gitHubContext) {
+    const containerBuilder = M$1(gitHubContext)
+        .returnType()
         .with({
         eventName: 'issues',
-    }, ({ payload }) => {
-        const { action } = payload;
-    })
+    }, ({ payload }) => M$1(payload)
+        .returnType()
+        .with({
+        action: 'closed',
+    }, IssueClosedEventHandler.handle)
+        .with({
+        action: 'opened',
+    }, IssueOpenedEventHandler.handle)
+        .with(z$1._, () => undefined)
+        .run())
         .with({
         eventName: 'push',
-    }, async ({ payload }) => await webhookClient.execute(PushEventHandler.handle(payload)));
+    }, ({ payload }) => PushEventHandler.handle(payload))
+        .with(z$1._, () => undefined)
+        .run();
+    if (containerBuilder) {
+        await webhookClient.execute(containerBuilder);
+    }
 }const { api } = RouteBases;
 const { webhook } = Routes;
 var HttpStatusCode;
@@ -48471,14 +48566,14 @@ class WebhookClient {
             }
         }
     }
-}(() => {
+}(async () => {
     const gitHubContext = context;
     showContextData(gitHubContext);
     const webhookId = getInput('webhook_id');
     const webhookToken = getInput('webhook_token');
+    const webhookClient = new WebhookClient(webhookId, webhookToken);
     try {
-        const webhookClient = new WebhookClient(webhookId, webhookToken);
-        handleEvent(webhookClient, gitHubContext);
+        await handleEvent(webhookClient, gitHubContext);
     }
     catch {
         setFailed('❌ Something went wrong while executing the action [Unknown Error]');
