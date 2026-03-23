@@ -27783,6 +27783,9 @@ function getInput(name, options) {
     if (options && options.required && !val) {
         throw new Error(`Input required and not supplied: ${name}`);
     }
+    if (options && options.trimWhitespace === false) {
+        return val;
+    }
     return val.trim();
 }
 //-----------------------------------------------------------------------
@@ -48521,14 +48524,21 @@ var HttpStatusCode;
 })(HttpStatusCode || (HttpStatusCode = {}));
 class WebhookClient {
     webhookId;
+    webhookThreadId;
     webhookToken;
-    constructor(webhookId, webhookToken) {
+    constructor(webhookId, webhookToken, webhookThreadId) {
         this.webhookId = webhookId;
+        this.webhookThreadId = webhookThreadId;
         this.webhookToken = webhookToken;
     }
     createWebhookExecuteRequest(containerBuilder) {
-        const { webhookId, webhookToken } = this;
-        const requestUrl = `${api}/${webhook(webhookId, webhookToken)}?with_components=true`;
+        const { webhookId, webhookThreadId, webhookToken } = this;
+        const encodedWebhookId = encodeURIComponent(webhookId);
+        const encodedWebhookToken = encodeURIComponent(webhookToken);
+        let requestUrl = `${api}/${webhook(encodedWebhookId, encodedWebhookToken)}?with_components=true`;
+        if (webhookThreadId) {
+            requestUrl += `&thread_id=${encodeURIComponent(webhookThreadId)}`;
+        }
         const requestBody = JSON.stringify({
             components: [
                 containerBuilder,
@@ -48568,14 +48578,21 @@ class WebhookClient {
             }
         }
     }
-}const GET_INPUT_OPTIONS = {
-    required: true};
-(async () => {
+}(async () => {
     const gitHubContext = context;
     showContextData(gitHubContext);
-    const webhookId = getInput('webhook_id', GET_INPUT_OPTIONS);
-    const webhookToken = getInput('webhook_token', GET_INPUT_OPTIONS);
-    const webhookClient = new WebhookClient(webhookId, webhookToken);
+    const webhookId = getInput('webhook_id', {
+        required: true,
+    });
+    const webhookToken = getInput('webhook_token', {
+        required: true,
+    });
+    const webhookThreadId = getInput('webhook_thread_id');
+    /*
+     * NOTE: getInput returns an empty string if the input is not defined.
+     * Must use OR operator to use `null` as fallback.
+     */
+    const webhookClient = new WebhookClient(webhookId, webhookToken, webhookThreadId || null);
     try {
         await handleEvent(webhookClient, gitHubContext);
     }
