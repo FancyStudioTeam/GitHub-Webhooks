@@ -1,23 +1,27 @@
-import { getInput, type InputOptions, info, setFailed } from '@actions/core';
+import { getInput, info, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 import { handleEvent } from './lib/Handlers.js';
 import type { GitHubContext } from './lib/Types.js';
 import { WebhookClient } from './structures/WebhookClient.js';
-
-const GET_INPUT_OPTIONS: InputOptions = {
-	required: true,
-	trimWhitespace: true,
-};
 
 (async () => {
 	const gitHubContext = context as unknown as GitHubContext;
 
 	showContextData(gitHubContext);
 
-	const webhookId = getInput('webhook_id', GET_INPUT_OPTIONS);
-	const webhookToken = getInput('webhook_token', GET_INPUT_OPTIONS);
+	const webhookId = getInput('webhook_id', {
+		required: true,
+	});
+	const webhookToken = getInput('webhook_token', {
+		required: true,
+	});
+	const webhookThreadId = getInput('webhook_thread_id');
 
-	const webhookClient = new WebhookClient(webhookId, webhookToken);
+	/*
+	 * NOTE: getInput returns an empty string if the input is not defined.
+	 * Must use OR operator to use `null` as fallback.
+	 */
+	const webhookClient = new WebhookClient(webhookId, webhookToken, webhookThreadId || null);
 
 	try {
 		await handleEvent(webhookClient, gitHubContext);

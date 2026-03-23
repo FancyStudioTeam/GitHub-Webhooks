@@ -13,17 +13,27 @@ enum HttpStatusCode {
 
 export class WebhookClient {
 	public readonly webhookId: string;
+	public readonly webhookThreadId: string | null;
 	public readonly webhookToken: string;
 
-	constructor(webhookId: string, webhookToken: string) {
+	constructor(webhookId: string, webhookToken: string, webhookThreadId: string | null) {
 		this.webhookId = webhookId;
+		this.webhookThreadId = webhookThreadId;
 		this.webhookToken = webhookToken;
 	}
 
 	private createWebhookExecuteRequest(containerBuilder: ContainerBuilder): Request {
-		const { webhookId, webhookToken } = this;
+		const { webhookId, webhookThreadId, webhookToken } = this;
 
-		const requestUrl = `${api}/${webhook(webhookId, webhookToken)}?with_components=true`;
+		const encodedWebhookId = encodeURIComponent(webhookId);
+		const encodedWebhookToken = encodeURIComponent(webhookToken);
+
+		let requestUrl = `${api}/${webhook(encodedWebhookId, encodedWebhookToken)}?with_components=true`;
+
+		if (webhookThreadId) {
+			requestUrl += `&thread_id=${encodeURIComponent(webhookThreadId)}`;
+		}
+
 		const requestBody = JSON.stringify({
 			components: [
 				containerBuilder,

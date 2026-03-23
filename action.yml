@@ -9,6 +9,9 @@ inputs:
         description: The token of the Discord webhook
         required: true
 
+    webhook_thread_id:
+        description: The ID of the thread where the webhook will be executed
+
 runs:
     using: node24
     main: dist/index.js
