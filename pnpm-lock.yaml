@@ -15,8 +15,8 @@ importers:
         specifier: 9.0.0
         version: 9.0.0
       '@discordjs/builders':
-        specifier: 1.13.1
-        version: 1.13.1
+        specifier: 1.14.0
+        version: 1.14.0
       discord-api-types:
         specifier: 0.38.42
         version: 0.38.42
@@ -125,8 +125,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@discordjs/builders@1.13.1':
-    resolution: {integrity: sha512-cOU0UDHc3lp/5nKByDxkmRiNZBpdp0kx55aarbiAfakfKJHlxv/yFW1zmIqCAmwH5CRlrH9iMFKJMpvW4DPB+w==}
+  '@discordjs/builders@1.14.0':
+    resolution: {integrity: sha512-7pVKxVWkeLUtrTo9nTYkjRcJk0Hlms6lYervXAD7E7+K5lil9ms2JrEB1TalMiHvQMh7h1HJZ4fCJa0/vHpl4w==}
     engines: {node: '>=16.11.0'}
 
   '@discordjs/formatters@0.6.2':
@@ -578,7 +578,7 @@ snapshots:
   '@biomejs/cli-win32-x64@2.4.8':
     optional: true
 
-  '@discordjs/builders@1.13.1':
+  '@discordjs/builders@1.14.0':
     dependencies:
       '@discordjs/formatters': 0.6.2
       '@discordjs/util': 1.2.0

@@ -3,7 +3,7 @@
 	"dependencies": {
 		"@actions/core": "3.0.0",
 		"@actions/github": "9.0.0",
-		"@discordjs/builders": "1.13.1",
+		"@discordjs/builders": "1.14.0",
 		"discord-api-types": "0.38.42",
 		"ts-pattern": "5.9.0"
 	},
