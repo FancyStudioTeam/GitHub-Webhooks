@@ -76,7 +76,7 @@ export const PullRequestOpenedEventHandler = {
 		const { name: repositoryName } = repository;
 
 		const formattedTitle = hyperlink(
-			escapeMarkdown(`[${repositoryName}] Pull Request Opened`),
+			`[${repositoryName}] Pull Request Opened`,
 			pullRequestHtmlUrl,
 		);
 

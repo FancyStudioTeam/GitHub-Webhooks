@@ -1,6 +1,5 @@
 import {
 	ContainerBuilder,
-	escapeMarkdown,
 	HeadingLevel,
 	heading,
 	hyperlink,
@@ -42,7 +41,7 @@ export const StarCreatedEventHandler = {
 		const { login: senderLogin } = sender;
 
 		const formattedTitle = hyperlink(
-			escapeMarkdown(`[${repositoryName}] New Star Added: ${senderLogin}`),
+			`[${repositoryName}] New Star Added: ${senderLogin}`,
 			repositoryHtmlUrl,
 		);
 

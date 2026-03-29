@@ -2,7 +2,6 @@ import {
 	bold,
 	ContainerBuilder,
 	escapeBold,
-	escapeMarkdown,
 	HeadingLevel,
 	heading,
 	hyperlink,
@@ -19,11 +18,11 @@ const GitHubUtils = {
 		const references = referenceString.split('/');
 		const branch = references.at(-1);
 
-		return escapeMarkdown(branch ?? 'unknown');
+		return branch ?? 'unknown';
 	},
 
 	formatCommitId(idString: string): string {
-		return escapeMarkdown(idString.slice(0, GITHUB_COMMIT_HASH_LENGTH));
+		return idString.slice(0, GITHUB_COMMIT_HASH_LENGTH);
 	},
 } as const;
 
@@ -92,9 +91,7 @@ export const PushEventHandler = Object.freeze({
 
 		const formattedBranch = inlineCode(GitHubUtils.formatBranch(ref));
 		const formattedTitle = hyperlink(
-			escapeMarkdown(
-				`[${repositoryName}] ${commitsLength} New Commits at ${formattedBranch}`,
-			),
+			`[${repositoryName}] ${commitsLength} New Commits at ${formattedBranch}`,
 			compare,
 		);
 
