@@ -4,6 +4,9 @@ on: [push, pull_request]
 
 jobs:
     ci:
+        permissions:
+            contents: read
+
         runs-on: ubuntu-latest
 
         steps:
