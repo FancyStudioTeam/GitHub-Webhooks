@@ -1,0 +1,95 @@
+import {
+	bold,
+	ContainerBuilder,
+	escapeBold,
+	escapeMarkdown,
+	HeadingLevel,
+	heading,
+	hyperlink,
+	inlineCode,
+	TextDisplayBuilder,
+} from '@discordjs/builders';
+import type { Commit, PushEvent } from '@octokit/webhooks-types';
+
+const GITHUB_COMMIT_HASH_LENGTH = 7;
+
+const GitHubUtils = {
+	formatBranch(referenceString: string): string {
+		const references = referenceString.split('/');
+		const branch = references.at(-1);
+
+		return branch ?? 'unknown';
+	},
+
+	formatCommitId(idString: string): string {
+		return idString.slice(0, GITHUB_COMMIT_HASH_LENGTH);
+	},
+} as const;
+
+export const PushEventHandler = Object.freeze({
+	createContainerBuilder(): ContainerBuilder {
+		return new ContainerBuilder();
+	},
+
+	createContainerCommitsBuilder({ commits }: PushEvent): TextDisplayBuilder {
+		const commitsData: string[] = [];
+		const commitsBuilder = this.createTextDisplayBuilder();
+
+		for (const commit of commits) {
+			const commitString = this.formatContainerCommit(commit);
+
+			commitsData.push(commitString);
+		}
+
+		commitsBuilder.setContent(commitsData.join('\n'));
+
+		return commitsBuilder;
+	},
+
+	createContainerTitleBuilder(pushEvent: PushEvent): TextDisplayBuilder {
+		const titleString = this.formatContainerTitle(pushEvent);
+		const titleBuilder = this.createTextDisplayBuilder();
+
+		titleBuilder.setContent(titleString);
+
+		return titleBuilder;
+	},
+
+	createEventContainerBuilder(pushEvent: PushEvent): ContainerBuilder {
+		const containerBuilder = this.createContainerBuilder();
+
+		const containerTitleBuilder = this.createContainerTitleBuilder(pushEvent);
+		const containerCommitsBuilder = this.createContainerCommitsBuilder(pushEvent);
+
+		containerBuilder.addTextDisplayComponents(containerTitleBuilder, containerCommitsBuilder);
+
+		return containerBuilder;
+	},
+
+	createTextDisplayBuilder(): TextDisplayBuilder {
+		return new TextDisplayBuilder();
+	},
+
+	formatContainerCommit({ id, message, url }: Commit): string {
+		const formattedCommitId = GitHubUtils.formatCommitId(id);
+		const formattedCommitMessage = escapeBold(message);
+		const formattedCommitUrl = hyperlink(inlineCode(formattedCommitId), url);
+
+		return bold(`${formattedCommitUrl} ${formattedCommitMessage}`);
+	},
+
+	formatContainerTitle({ commits, compare, ref, repository }: PushEvent): string {
+		const { length: commitsLength } = commits;
+		const { full_name: repositoryFullName } = repository;
+
+		const formattedBranch = GitHubUtils.formatBranch(ref);
+		const formattedTitle = hyperlink(
+			escapeMarkdown(
+				`[${repositoryFullName}] ${commitsLength} New Commits at ${formattedBranch}`,
+			),
+			compare,
+		);
+
+		return heading(formattedTitle, HeadingLevel.Three);
+	},
+});
