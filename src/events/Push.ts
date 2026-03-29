@@ -91,7 +91,7 @@ export const PushEventHandler = Object.freeze({
 
 		const formattedBranch = inlineCode(GitHubUtils.formatBranch(ref));
 		const formattedTitle = hyperlink(
-			`[${repositoryName}] ${commitsLength} New Commits at ${formattedBranch}`,
+			`[${repositoryName}] ${commitsLength} New Commit(s) at ${formattedBranch}`,
 			compare,
 		);
 
