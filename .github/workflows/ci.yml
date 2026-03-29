@@ -25,7 +25,7 @@ jobs:
               run: pnpm install
 
             - name: Build Application
-              run: pnpm wrangler:deploy:dry
+              run: pnpm wrangler:ci
               env:
                   CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

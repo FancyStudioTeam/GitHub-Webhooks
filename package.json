@@ -35,7 +35,6 @@
 		"prepare": "husky",
 		"wrangler:ci": "wrangler deploy --dry-run",
 		"wrangler:deploy": "wrangler deploy",
-		"wrangler:deploy:dry": "wrangler deploy --dry-run",
 		"wrangler:dev": "wrangler dev",
 		"wrangler:secret:bulk": "wrangler secret bulk .env",
 		"wrangler:types": "wrangler types"
